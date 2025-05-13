@@ -1,7 +1,26 @@
+import { useNavigate } from "react-router";
+import { signUp } from "~/lib/auth.client";
 import Input from "~/components/Input";
 import Google from "~/icons/Google";
 
-export default function SigninPage() {
+export default function SignupPage() {
+  const navigate = useNavigate();
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.target as HTMLFormElement);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    await signUp.email(
+      { email, password, name: email },
+      {
+        onSuccess: () => {
+          navigate("/habits");
+        },
+      }
+    );
+  };
+
   return (
     <section className="flex flex-row flex-nowrap w-full items-center justify-center">
       <div className="max-w-lg w-full px-4 py-6 bg-white rounded-md shadow-md">
@@ -25,7 +44,7 @@ export default function SigninPage() {
             <hr className="grow" />
           </div>
 
-          <div>
+          <form onSubmit={onSubmit}>
             <div>
               <Input name="email" type="text" label="Email" />
               <Input name="password" type="password" label="Password" />
@@ -39,7 +58,7 @@ export default function SigninPage() {
                 Signup
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>
