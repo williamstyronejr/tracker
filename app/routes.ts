@@ -6,6 +6,8 @@ import {
 } from "@react-router/dev/routes";
 
 export default [
+  route("api/auth/*", "routes/api/auth.ts"),
+
   layout("./layouts/LandingLayout.tsx", [
     index("pages/homepage.tsx"),
     route("signin", "pages/auth/signin.tsx"),
@@ -14,6 +16,6 @@ export default [
 
   layout("./layouts/AppLayout.tsx", [
     route("habits/:mode?", "pages/habits/Habits.tsx"),
-    route("settings/:panel?", "pages/settings/settings.tsx"),
+    route("settings/:panel?", "pages/settings/Settings.tsx"),
   ]),
 ] satisfies RouteConfig;
