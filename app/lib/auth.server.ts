@@ -4,7 +4,7 @@ import db from "./db"; // your drizzle instance
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
-    provider: "pg", // or "mysql", "sqlite"
+    provider: "pg",
   }),
   emailAndPassword: {
     enabled: true,
@@ -16,4 +16,5 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
+  trustedOrigins: ["http://localhost:5173"],
 });

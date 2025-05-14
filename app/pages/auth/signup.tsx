@@ -2,8 +2,10 @@ import { useNavigate } from "react-router";
 import { signUp } from "~/lib/auth.client";
 import Input from "~/components/Input";
 import Google from "~/icons/Google";
+import { useState } from "react";
 
 export default function SignupPage() {
+  const [requesting, setRequesting] = useState(false);
   const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -11,11 +13,19 @@ export default function SignupPage() {
     const formData = new FormData(e.target as HTMLFormElement);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+
     await signUp.email(
-      { email, password, name: email },
+      { email, password, name: email, image: "/imgs/default.png" },
       {
-        onSuccess: () => {
+        onSuccess: (ctx) => {
           navigate("/habits");
+        },
+        onRequest: () => {
+          setRequesting(true);
+        },
+        onError: (error) => {
+          console.log(error);
+          setRequesting(false);
         },
       }
     );
@@ -25,7 +35,7 @@ export default function SignupPage() {
     <section className="flex flex-row flex-nowrap w-full items-center justify-center">
       <div className="max-w-lg w-full px-4 py-6 bg-white rounded-md shadow-md">
         <header className="">
-          <h1 className="font-bold text-xl py-4">Signup</h1>
+          <h1 className="font-bold text-xl py-4">Signup huihui</h1>
         </header>
 
         <div className="flex flex-col flex-nowrap gap-8">
