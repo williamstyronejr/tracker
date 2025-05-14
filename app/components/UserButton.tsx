@@ -1,4 +1,5 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { signOut } from "~/lib/auth.client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,6 +8,8 @@ import {
 } from "./ui/dropdown-menu";
 
 export default function UserButton({ imgSrc }: { imgSrc: string }) {
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -30,7 +33,21 @@ export default function UserButton({ imgSrc }: { imgSrc: string }) {
 
         <div className="pb-2">
           <DropdownMenuItem className="px-2">
-            <div className="">Logout</div>
+            <button
+              className=""
+              type="button"
+              onClick={async () => {
+                await signOut({
+                  fetchOptions: {
+                    onSuccess: () => {
+                      navigate("/");
+                    },
+                  },
+                });
+              }}
+            >
+              Logout
+            </button>
           </DropdownMenuItem>
         </div>
       </DropdownMenuContent>
