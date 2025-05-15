@@ -7,7 +7,13 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function UserButton({ imgSrc }: { imgSrc: string }) {
+export default function UserButton({
+  imgSrc,
+  name,
+}: {
+  imgSrc: string;
+  name: string;
+}) {
   const navigate = useNavigate();
 
   return (
@@ -22,16 +28,25 @@ export default function UserButton({ imgSrc }: { imgSrc: string }) {
 
       <DropdownMenuContent className="bg-white border-none">
         <div className="pt-2">
+          <div className="flex flex-row items-center gap-2">
+            <img
+              className="w-6 h-6 bg-sky-500 rounded-md"
+              src={imgSrc}
+              alt="User Profile"
+            />
+            <p className="text-sm font-medium">{name}</p>
+          </div>
+
+          <hr className="mt-4 mb-2" />
+        </div>
+
+        <div className="pt-2">
           <Link className="" to="/settings/account">
             <DropdownMenuItem className="w-full px-2">
               Settings
             </DropdownMenuItem>
           </Link>
-        </div>
 
-        <hr className="my-4" />
-
-        <div className="pb-2">
           <DropdownMenuItem className="px-2">
             <button
               className=""
