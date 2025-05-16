@@ -1,8 +1,8 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
-import { signUp } from "~/lib/auth.client";
+import { signIn, signUp } from "~/lib/auth.client";
 import Input from "~/components/Input";
 import Google from "~/icons/Google";
-import { useState } from "react";
 
 export default function SignupPage() {
   const [requesting, setRequesting] = useState(false);
@@ -35,16 +35,25 @@ export default function SignupPage() {
     <section className="flex flex-row flex-nowrap w-full items-center justify-center">
       <div className="max-w-lg w-full px-4 py-6 bg-white rounded-md shadow-md">
         <header className="">
-          <h1 className="font-bold text-xl py-4">Signup huihui</h1>
+          <h1 className="font-bold text-xl py-4">Signup</h1>
         </header>
 
         <div className="flex flex-col flex-nowrap gap-8">
           <div className="py-6">
             <div className="border border-slate-200 rounded-md">
-              <div className="flex flex-row flex-nowrap gap-2 items-center justify-center py-2">
+              <button
+                className="flex flex-row flex-nowrap gap-2 items-center justify-center py-2"
+                type="button"
+                onClick={() => {
+                  signIn.social({
+                    provider: "google",
+                    callbackURL: "/habits",
+                  });
+                }}
+              >
                 <Google className="w-8 h-8" />
                 <span>Signup with Google</span>
-              </div>
+              </button>
             </div>
           </div>
 

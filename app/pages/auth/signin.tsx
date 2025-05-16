@@ -40,10 +40,19 @@ export default function SigninPage() {
         <div className="flex flex-col flex-nowrap gap-8">
           <div className="py-6">
             <div className="border border-slate-200 rounded-md">
-              <div className="flex flex-row flex-nowrap gap-2 items-center justify-center py-2">
+              <button
+                type="button"
+                className="flex flex-row flex-nowrap gap-2 items-center justify-center py-2"
+                onClick={() => {
+                  signIn.social({
+                    provider: "google",
+                    callbackURL: "/habits",
+                  });
+                }}
+              >
                 <Google className="w-8 h-8" />
                 <span>Signin with Google</span>
-              </div>
+              </button>
             </div>
           </div>
 
