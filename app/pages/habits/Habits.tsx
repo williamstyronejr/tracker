@@ -1,9 +1,9 @@
 import { useState } from "react";
+import { redirect } from "react-router";
+import { getUser } from "~/lib/auth.server";
 import DateScroller from "./DateScroller";
 import Checkbox from "~/components/Checkbox";
 import NoteIcon from "~/icons/NoteIcon";
-
-import type { Route } from "./+types/Habits";
 import {
   Dialog,
   DialogContent,
@@ -11,6 +11,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
+import db from "~/lib/db";
+import { eq } from "drizzle-orm";
+import { habitTable } from "~/lib/schema";
+
+import type { Route } from "./+types/Habits";
+import type { LoaderFunctionArgs } from "react-router";
+
+export async function loader({ request }: LoaderFunctionArgs) {
+  const user = await getUser(request);
+
+  if (!user) return redirect("/login");
+
+  const habits = await db.query.habitTable.findMany({
+    where: eq(habitTable.userId, user.id),
+  });
+
+  return { habits };
+}
 
 function MonthlyView({
   tasks = [
@@ -191,10 +209,14 @@ function getDaysInMonth(date: Date): number {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 }
 
-export default function HabitsPage({ params }: Route.ComponentProps) {
+export default function HabitsPage({
+  params,
+  loaderData,
+}: Route.ComponentProps) {
   const { mode } = params;
   const [currDate, setCurrDate] = useState(new Date());
 
+  console.log(loaderData);
   return (
     <section className="">
       <header>
@@ -202,8 +224,8 @@ export default function HabitsPage({ params }: Route.ComponentProps) {
       </header>
 
       <div>
-        {/* <DailyView currDate={currDate} setCurrDate={setCurrDate} /> */}
-        <MonthlyView days={getDaysInMonth(currDate)} />
+        <DailyView currDate={currDate} setCurrDate={setCurrDate} />
+        {/* <MonthlyView days={getDaysInMonth(currDate)} /> */}
       </div>
     </section>
   );

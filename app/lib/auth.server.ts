@@ -18,3 +18,8 @@ export const auth = betterAuth({
   },
   trustedOrigins: ["http://localhost:5173"],
 });
+
+export async function getUser(request: Request) {
+  const session = await auth.api.getSession(request);
+  return session?.user;
+}
