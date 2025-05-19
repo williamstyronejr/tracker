@@ -18,4 +18,7 @@ export default [
     route("habits/:mode?", "pages/habits/Habits.tsx"),
     route("settings/:panel?", "pages/settings/Settings.tsx"),
   ]),
+
+  // Actions Routes
+  route("api/habits/create", "routes/api/habits/create.ts"),
 ] satisfies RouteConfig;

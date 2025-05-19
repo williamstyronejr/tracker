@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { redirect } from "react-router";
+import { eq } from "drizzle-orm";
+import db from "~/lib/db";
+import { habitTable } from "~/lib/schema";
 import { getUser } from "~/lib/auth.server";
 import DateScroller from "./DateScroller";
+import CreateHabitButton from "./CreateHabitButton";
 import Checkbox from "~/components/Checkbox";
 import NoteIcon from "~/icons/NoteIcon";
 import {
@@ -11,9 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "~/components/ui/dialog";
-import db from "~/lib/db";
-import { eq } from "drizzle-orm";
-import { habitTable } from "~/lib/schema";
 
 import type { Route } from "./+types/Habits";
 import type { LoaderFunctionArgs } from "react-router";
@@ -216,11 +217,12 @@ export default function HabitsPage({
   const { mode } = params;
   const [currDate, setCurrDate] = useState(new Date());
 
-  console.log(loaderData);
+  // console.log(loaderData);
   return (
     <section className="">
       <header>
         <h1 className="text-xl font-semibold">Habits</h1>
+        <CreateHabitButton />
       </header>
 
       <div>
